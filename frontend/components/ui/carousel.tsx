@@ -1,4 +1,3 @@
-"use client";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 import { useState, useRef, useId, useEffect } from "react";
 
@@ -173,6 +172,16 @@ export default function Carousel({ slides }: CarouselProps) {
   };
 
   const id = useId();
+
+  // Auto slide change every 3 seconds
+  useEffect(() => {
+    const autoSlideInterval = setInterval(() => {
+      const next = current + 1;
+      setCurrent(next === slides.length ? 0 : next);
+    }, 3000); // Change slide every 3 seconds
+
+    return () => clearInterval(autoSlideInterval); // Clean up interval on component unmount
+  }, [current, slides.length]);
 
   return (
     <div
