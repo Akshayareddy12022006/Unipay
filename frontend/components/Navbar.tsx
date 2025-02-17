@@ -1,91 +1,109 @@
-"use client";
-import React, { useState } from "react";
-import { HoveredLink, Menu, MenuItem, ProductItem } from "./ui/navbar-menu";
-import { cn } from "@/lib/utils";
+"use client"
 
-export function NavbarDemo() {
+import * as React from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Menu } from "lucide-react"
+import { useRouter } from "next/router" // Added
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
+
+const navItems = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Services", href: "/services" },
+  { name: "Contact", href: "/contact" },
+]
+
+export function Navbar() {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const pathname = usePathname()
+
   return (
-    <div className="relative w-full flex items-center justify-center">
-      <Navbar className="top-2" />
-    </div>
-  );
-}
-
-function Navbar({ className }: { className?: string }) {
-  const [active, setActive] = useState<string | null>(null);
-
-  return (
-    <div
-      className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
-    >
-      {/* Navbar Container */}
-      <div className="flex items-center justify-between px-4 py-2 bg-white shadow-md rounded-lg">
-        {/* Left Side: Image */}
-        <div className="flex items-center space-x-4">
-          <img
-            src="https://assets.aceternity.com/your-logo.png" // Add your logo image URL here
-            alt="Logo"
-            className="h-8 w-auto"
-          />
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-14 items-center">
+        <div className="mr-4 hidden md:flex">
+          <Link href="/" className="mr-6 flex items-center space-x-2">
+            <span className="hidden font-bold sm:inline-block">ACME Inc</span>
+          </Link>
+          <nav className="flex items-center space-x-6 text-sm font-medium">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "transition-colors hover:text-foreground/80",
+                  pathname === item.href ? "text-foreground" : "text-foreground/60",
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
         </div>
-
-        {/* Right Side: Sign In Button */}
-        <div className="flex items-center space-x-4">
-          <button className="text-sm text-neutral-600 dark:text-neutral-300 hover:underline">
-            Sign In
-          </button>
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild>
+            <Button
+              variant="ghost"
+              className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+            >
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Toggle Menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="pr-0">
+            <MobileLink href="/" className="flex items-center" onOpenChange={setIsOpen}>
+              <span className="font-bold">ACME Inc</span>
+            </MobileLink>
+            <div className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
+              <div className="flex flex-col space-y-3">
+                {navItems.map((item) => (
+                  <MobileLink
+                    key={item.href}
+                    href={item.href}
+                    onOpenChange={setIsOpen}
+                    className={cn(pathname === item.href ? "text-foreground" : "text-foreground/60")}
+                  >
+                    {item.name}
+                  </MobileLink>
+                ))}
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+          <div className="w-full flex-1 md:w-auto md:flex-none">
+            <ThemeToggle />
+          </div>
         </div>
       </div>
-
-      {/* Menu */}
-      <Menu setActive={setActive}>
-        <MenuItem setActive={setActive} active={active} item="Services">
-          <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/web-dev">Web Development</HoveredLink>
-            <HoveredLink href="/interface-design">Interface Design</HoveredLink>
-            <HoveredLink href="/seo">Search Engine Optimization</HoveredLink>
-            <HoveredLink href="/branding">Branding</HoveredLink>
-          </div>
-        </MenuItem>
-        <MenuItem setActive={setActive} active={active} item="Products">
-          <div className="text-sm grid grid-cols-2 gap-10 p-4">
-            <ProductItem
-              title="Algochurn"
-              href="https://algochurn.com"
-              src="https://assets.aceternity.com/demos/algochurn.webp"
-              description="Prepare for tech interviews like never before."
-            />
-            <ProductItem
-              title="Tailwind Master Kit"
-              href="https://tailwindmasterkit.com"
-              src="https://assets.aceternity.com/demos/tailwindmasterkit.webp"
-              description="Production ready Tailwind css components for your next project"
-            />
-            <ProductItem
-              title="Moonbeam"
-              href="https://gomoonbeam.com"
-              src="https://assets.aceternity.com/demos/Screenshot+2024-02-21+at+11.51.31%E2%80%AFPM.png"
-              description="Never write from scratch again. Go from idea to blog in minutes."
-            />
-            <ProductItem
-              title="Rogue"
-              href="https://userogue.com"
-              src="https://assets.aceternity.com/demos/Screenshot+2024-02-21+at+11.47.07%E2%80%AFPM.png"
-              description="Respond to government RFPs, RFIs and RFQs 10x faster using AI"
-            />
-          </div>
-        </MenuItem>
-        <MenuItem setActive={setActive} active={active} item="Pricing">
-          <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/hobby">Hobby</HoveredLink>
-            <HoveredLink href="/individual">Individual</HoveredLink>
-            <HoveredLink href="/team">Team</HoveredLink>
-            <HoveredLink href="/enterprise">Enterprise</HoveredLink>
-          </div>
-        </MenuItem>
-      </Menu>
-    </div>
-  );
+    </header>
+  )
 }
 
+interface MobileLinkProps extends React.PropsWithChildren {
+  href: string
+  onOpenChange?: (open: boolean) => void
+  className?: string
+}
 
+function MobileLink({ href, onOpenChange, className, children }: MobileLinkProps) {
+  const router = useRouter() // Use router for navigation
+
+  return (
+    <Link
+      href={href}
+      onClick={(e) => {
+        e.preventDefault() // Prevent default anchor behavior
+        router.push(href) // Navigate with Next.js router
+        onOpenChange?.(false) // Close the mobile menu
+      }}
+      className={cn(className)}
+    >
+      {children}
+    </Link>
+  )
+}
