@@ -1,11 +1,11 @@
 import "./globals.css";
-import { Home } from "./LandingPage/page";
+import LandingPage from "./LandingPage/page";
 
 export default function RootLayout({}) {
   return (
     <html lang="en">
       <body className="h-[100vh]">
-        <Home />
+        <LandingPage />
       </body>
     </html>
   );
