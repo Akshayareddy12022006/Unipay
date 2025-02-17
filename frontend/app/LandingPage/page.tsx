@@ -1,6 +1,7 @@
 // import { NavbarDemo } from "@/components/Navbar"
 // import { AppleCardsCarouselDemo } from "@/components/Components"
 import { CarouselDemo } from "@/components/Carousel"
+import { Navbar } from "@/components/navbar"
 
 export default function LandingPage() {
     return (
@@ -9,6 +10,7 @@ export default function LandingPage() {
                 {/* <div className="p-">
                 <NavbarDemo />
                 </div>  */}
+                <Navbar/>
                 <div className="m-16 ml-0 mr-0">
                     <CarouselDemo />
                 </div>
