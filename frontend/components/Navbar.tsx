@@ -13,10 +13,31 @@ export function NavbarDemo() {
 
 function Navbar({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
+
   return (
     <div
       className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
     >
+      {/* Navbar Container */}
+      <div className="flex items-center justify-between px-4 py-2 bg-white shadow-md rounded-lg">
+        {/* Left Side: Image */}
+        <div className="flex items-center space-x-4">
+          <img
+            src="https://assets.aceternity.com/your-logo.png" // Add your logo image URL here
+            alt="Logo"
+            className="h-8 w-auto"
+          />
+        </div>
+
+        {/* Right Side: Sign In Button */}
+        <div className="flex items-center space-x-4">
+          <button className="text-sm text-neutral-600 dark:text-neutral-300 hover:underline">
+            Sign In
+          </button>
+        </div>
+      </div>
+
+      {/* Menu */}
       <Menu setActive={setActive}>
         <MenuItem setActive={setActive} active={active} item="Services">
           <div className="flex flex-col space-y-4 text-sm">
@@ -27,7 +48,7 @@ function Navbar({ className }: { className?: string }) {
           </div>
         </MenuItem>
         <MenuItem setActive={setActive} active={active} item="Products">
-          <div className="  text-sm grid grid-cols-2 gap-10 p-4">
+          <div className="text-sm grid grid-cols-2 gap-10 p-4">
             <ProductItem
               title="Algochurn"
               href="https://algochurn.com"
@@ -66,3 +87,5 @@ function Navbar({ className }: { className?: string }) {
     </div>
   );
 }
+
+
