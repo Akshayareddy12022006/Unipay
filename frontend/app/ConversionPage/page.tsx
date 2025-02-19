@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+import Navbar from "@/components/Navbar";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare global {
   interface Window {
@@ -119,7 +121,7 @@ function ConversionPage() {
       <Head>
         <title>Conversion Page</title>
       </Head>
-
+      <Navbar selectedMenuItem="About" />
       <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-b from-white to-gray-400">
         <div className="md:w-2/3 p-4 overflow-y-auto h-[50vh] md:h-screen">
           <h2 className="text-2xl font-bold mb-4">Razorpay Terms and Conditions</h2>
