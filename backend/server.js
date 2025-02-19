@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 
-
 dotenv.config();
 
 const app = express();
@@ -13,6 +12,7 @@ connectDB();
 
 // Middleware to parse JSON
 app.use(express.json());
+app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
@@ -24,4 +24,5 @@ mongoose
 app.get("/", (req, res) => {
   res.send("Unipay API is running...");
 });
+
 
