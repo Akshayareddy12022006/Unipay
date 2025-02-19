@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation"; // Import useRouter
+import Link from "next/link"; // Import Link for navigation
 import { useState } from "react"; // Import useState for loading state
 
 // Define the form schema using Zod
@@ -175,11 +176,17 @@ export default function SignupPage() {
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "Signing up..." : "Sign Up"}
             </Button>
+
+            {/* Sign In Link */}
+            <p className="text-center text-sm text-gray-600 mt-4">
+              Already have an account?{" "}
+              <Link href="/auth/BusinessSignin" className="text-blue-600 hover:underline">
+                Sign in
+              </Link>
+            </p>
           </form>
         </Form>
       </div>
     </div>
   );
 }
-
-

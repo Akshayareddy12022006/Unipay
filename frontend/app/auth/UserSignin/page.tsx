@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function SignInPage() {
   const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ export default function SignInPage() {
       // Check if username and passcode are valid (replace with your actual validation logic)
       if (username === "user123" && passcode === "password123") {
         console.log("Sign in successful!");
-        router.push("/userdashboard"); // Redirect to the user dashboard
+        router.push("/Dashboard/UserDashboard"); // Redirect to the user dashboard
       } else {
         alert("Invalid username or passcode. Please try again.");
       }
@@ -34,7 +35,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex flex-col justify-center items-center h-screen bg-gray-100">
       <Card className="w-96">
         <CardHeader>
           <CardTitle>Sign In</CardTitle>
@@ -56,6 +57,14 @@ export default function SignInPage() {
           <Button onClick={handleSignIn} className="w-full" disabled={isLoading}>
             {isLoading ? "Signing in..." : "Sign In"}
           </Button>
+          <div className="mt-4 text-center">
+          <p className="text-center text-sm text-gray-600 mt-4">
+          New User?{" "}
+            <Link href="/auth/UserSignup" className="text-blue-500 hover:underline">
+              Sign up
+            </Link>
+            </p>
+          </div>
         </CardContent>
       </Card>
     </div>
