@@ -25,6 +25,7 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(201).json({
       _id: user._id,
       rollNumber: user.rollNumber,
+      balance: user.balance,
       token: generateToken(user._id),
     });
   } else {
@@ -45,6 +46,7 @@ const authUser = asyncHandler(async (req, res) => {
     res.json({
       _id: user._id,
       rollNumber: user.rollNumber,
+      balance: user.balance,
       token: generateToken(user._id),
     });
   } else {

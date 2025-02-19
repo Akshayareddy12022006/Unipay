@@ -13,6 +13,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    balance: {
+      type: Number,
+      default: 0, // Default balance is 0
+    },
   },
   {
     timestamps: true,
