@@ -10,13 +10,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import Navbar from "@/components/Navbar";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 declare global {
   interface Window {
     Razorpay: any;
   }
 }
-/* eslint-enable @typescript-eslint/no-explicit-any */
+ 
 
 
 
@@ -106,7 +106,7 @@ function ConversionPage() {
         }
       };
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       const Razorpay = window.Razorpay as any;
 
       const rzp1 = new Razorpay(options);

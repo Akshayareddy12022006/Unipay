@@ -14,7 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "typeRoots": ["minimatch"],
+    "types": ["minimatch"],
     "plugins": [
       {
         "name": "next"
