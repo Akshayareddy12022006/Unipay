@@ -121,6 +121,8 @@ const Carousel: React.FC<CarouselProps> = ({
                 style={{ minWidth: '100%' }}
               >
                 <Image
+                  width={3000} 
+                  height={2000}
                   src={slide.src}
                   alt={slide.alt}
                   className="w-full h-full object-cover"
