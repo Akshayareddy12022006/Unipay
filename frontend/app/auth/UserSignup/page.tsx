@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");
@@ -81,6 +82,14 @@ export default function SignUpPage() {
           <Button onClick={handleSignUp} className="w-full" disabled={isLoading}>
             {isLoading ? "Signing up..." : "Sign Up"}
           </Button>
+          <div className="mt-4 text-center">
+          <p className="text-center text-sm text-gray-600 mt-4">
+          Already have an account?{" "}
+            <Link href="/auth/UserSignin" className="text-blue-500 hover:underline">
+               Sign in
+            </Link>
+            </p>
+          </div>
         </CardContent>
       </Card>
     </div>
