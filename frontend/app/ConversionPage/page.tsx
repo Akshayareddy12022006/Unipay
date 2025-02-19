@@ -121,7 +121,7 @@ function ConversionPage() {
       <Head>
         <title>Conversion Page</title>
       </Head>
-      <Navbar selectedMenuItem="About" />
+      <Navbar selectedMenuItem="Convert" />
       <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-b from-white to-gray-400">
         <div className="md:w-2/3 p-4 overflow-y-auto h-[50vh] md:h-screen">
           <h2 className="text-2xl font-bold mb-4">Razorpay Terms and Conditions</h2>
