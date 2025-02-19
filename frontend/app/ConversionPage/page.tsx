@@ -8,10 +8,21 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+
+
 function ConversionPage() {
   const [rupees, setRupees] = useState<string>("");
   const [coins, setCoins] = useState<string>("");
   const [agreed, setAgreed] = useState(false);
+  const [razorpayLoaded, setRazorpayLoaded] = useState(false);
 
   useEffect(() => {
     if (rupees !== "") {
@@ -22,6 +33,14 @@ function ConversionPage() {
       setRupees(rupeeValue.toFixed(2));
     }
   }, [rupees, coins]);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = () => setRazorpayLoaded(true);
+    document.body.appendChild(script);
+  }, []);
 
   const handleRupeeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRupees(e.target.value);
@@ -59,7 +78,7 @@ function ConversionPage() {
         name: "UniPay",
         description: "Test Transaction",
         order_id: order.id,
-        handler: async function (response) {
+        handler: async function (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) {
           const body = { ...response };
 
           const validateResponse = await fetch("http://localhost:5001/order/validate", {
@@ -85,7 +104,10 @@ function ConversionPage() {
         }
       };
 
-      const rzp1 = new window.Razorpay(options);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const Razorpay = window.Razorpay as any;
+
+      const rzp1 = new Razorpay(options);
       rzp1.open();
     } catch (error) {
       console.error("Payment initiation failed", error);
@@ -95,46 +117,34 @@ function ConversionPage() {
   return (
     <>
       <Head>
-        <script src="https://checkout.razorpay.com/v1/checkout.js" async></script>
+        <title>Conversion Page</title>
       </Head>
 
-      <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-b from-white to-gray-900">
+      <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-b from-white to-gray-400">
         <div className="md:w-2/3 p-4 overflow-y-auto h-[50vh] md:h-screen">
           <h2 className="text-2xl font-bold mb-4">Razorpay Terms and Conditions</h2>
           <div className="space-y-4 text-md">
-          <p>
-            1. Acceptance of Terms: By using Razorpays services, you agree to be bound by these Terms and Conditions.
-          </p>
-          <p>2. Service Description: Razorpay provides payment gateway services to facilitate online transactions.</p>
-          <p>3. Account Registration: Users must provide accurate and complete information when creating an account.</p>
-          <p>
-            4. Payment Processing: Razorpay processes payments on behalf of merchants and is not responsible for the
-            goods or services provided by merchants.
-          </p>
-          <p>5. Fees: Razorpay charges fees for its services as outlined in the pricing section of the website.</p>
-          <p>6. Prohibited Activities: Users must not use Razorpay for any illegal or unauthorized purpose.</p>
-          <p>7. Data Privacy: Razorpay collects and processes personal data in accordance with its Privacy Policy.</p>
-          <p>
-            8. Intellectual Property: All content and trademarks on the Razorpay website are the property of Razorpay or
-            its licensors.
-          </p>
-          <p>
-            9. Limitation of Liability: Razorpay is not liable for any indirect, incidental, or consequential damages
-            arising from the use of its services.
-          </p>
-          <p>10. Termination: Razorpay reserves the right to terminate or suspend accounts at its discretion.</p>
-          <p>11. Governing Law: These terms are governed by the laws of India.</p>
-          <p>
-            12. Changes to Terms: Razorpay may modify these terms at any time, with changes effective upon posting to
-            the website.
-          </p>
-          <p>13. Contact Information: For any questions about these terms, please contact Razorpay support.</p>
-          <p>
-            14. Refunds and Cancellations: Refund and cancellation policies are set by individual merchants and not by
-            Razorpay.
-          </p>
-          <p>15. Security: Users are responsible for maintaining the confidentiality of their account information.</p>
-        </div>
+            <p>1. <strong>Acceptance of Terms:</strong> By using Razorpay’s payment gateway, you agree to comply with these terms and conditions. If you do not agree, you should not proceed with the payment.</p>
+            <p>2. <strong>Payment Processing:</strong> All transactions processed through Razorpay are subject to approval by the respective banks or payment providers. Razorpay is not responsible for payment failures due to incorrect details or insufficient funds.</p>
+            <p>3. <strong>Refund Policy:</strong> Refunds are subject to the policies of the merchant or service provider. Razorpay only facilitates payments and does not handle refund requests directly.</p>
+            <p>4. <strong>Transaction Fees:</strong> Additional transaction charges may be applied based on the payment method used. These charges are non-refundable.</p>
+            <p>5. <strong>Fraud Prevention:</strong> Razorpay reserves the right to reject or hold payments if fraudulent activity is suspected. Users must provide valid identification if requested.</p>
+            <p>6. <strong>Data Security:</strong> Razorpay ensures data security through encryption and compliance with PCI-DSS standards. However, users are responsible for safeguarding their credentials.</p>
+            <p>7. <strong>Liability Limitation:</strong> Razorpay is only a payment facilitator and is not liable for service issues related to the merchant, delayed transactions, or technical failures beyond its control.</p>
+            <p>8. <strong>Chargebacks and Disputes:</strong> Users can raise chargebacks with their banks for unauthorized transactions. Razorpay will work with the merchant and bank to resolve disputes.</p>
+            <p>9. <strong>Service Availability:</strong> Razorpay does not guarantee uninterrupted service and may temporarily suspend payment processing for maintenance or security reasons.</p>
+            <p>10. <strong>Governing Law:</strong> These terms and conditions are governed by the laws of India, and any disputes will be resolved under Indian jurisdiction.</p>
+            <p>11. <strong>User Responsibilities:</strong> Users must ensure that all payment details, including card information and UPI IDs, are accurate and up to date to avoid transaction failures.</p>
+            <p>12. <strong>Unauthorized Transactions:</strong> If a user detects an unauthorized transaction, they must report it to their bank and Razorpay immediately for investigation.</p>
+            <p>13. <strong>Payment Confirmation:</strong> A payment is considered successful only after the user receives a confirmation from Razorpay and the merchant.</p>
+            <p>14. <strong>Merchant Policies:</strong> Users acknowledge that Razorpay is not responsible for the quality, delivery, or refund policies of merchants.</p>
+            <p>15. <strong>Auto-Debit & Subscriptions:</strong> Users opting for auto-debit or recurring payments must ensure they have sufficient funds, and cancellations should be done as per the merchant’s policy.</p>
+            <p>16. <strong>Account Suspension:</strong> Razorpay reserves the right to suspend or terminate user access if suspicious activity, policy violations, or legal issues are detected.</p>
+            <p>17. <strong>Delayed Settlements:</strong> In some cases, payments may be held for verification before settlement. Razorpay will notify users if such action is taken.</p>
+            <p>18. <strong>International Transactions:</strong> Users making international payments should ensure their cards or banks support foreign transactions. Additional currency conversion fees may apply.</p>
+            <p>19. <strong>Third-Party Services:</strong> Razorpay may integrate with third-party services for fraud detection, analytics, and payment processing. Users agree to these integrations as part of the service.</p>
+            <p>20. <strong>Policy Updates:</strong> Razorpay reserves the right to modify these terms and conditions at any time. Users should review the policies periodically to stay informed.</p>
+          </div>
         </div>
 
         <div className="md:w-1/3 p-4 h-[50vh] md:h-screen overflow-y-auto">
@@ -186,8 +196,8 @@ function ConversionPage() {
                   I agree to the Terms and Conditions
                 </label>
               </div>
-              <Button disabled={!agreed} className="w-full" onClick={initiatePayment}>
-                Proceed to Convert
+              <Button disabled={!agreed || !razorpayLoaded} className="w-full" onClick={initiatePayment}>
+                {razorpayLoaded ? "Proceed to Convert" : "Loading Payment..."}
               </Button>
             </CardContent>
           </Card>

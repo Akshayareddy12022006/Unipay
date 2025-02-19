@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 
 interface Slide {
   id: number | string;
@@ -119,7 +120,7 @@ const Carousel: React.FC<CarouselProps> = ({
                 className="w-full flex-shrink-0"
                 style={{ minWidth: '100%' }}
               >
-                <img
+                <Image
                   src={slide.src}
                   alt={slide.alt}
                   className="w-full h-full object-cover"
