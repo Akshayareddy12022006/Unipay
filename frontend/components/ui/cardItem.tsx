@@ -16,7 +16,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ title, imageSrc, linkTo }) => {
   return (
     <div
       onClick={() => router.push(linkTo)}
-      className="group relative w-[300px] h-[300px] cursor-pointer transition-all duration-300 ease-in-out hover:scale-[1.02]"
+      className="group relative w-[300px] h-[300px] cursor-pointer transition-all duration-300 ease-in-out hover:scale-[1.02] m-5"
     >
       <div className="relative h-full w-full overflow-hidden rounded-2xl transition-all duration-300 ease-in-out group-hover:shadow-lg">
         <Image
