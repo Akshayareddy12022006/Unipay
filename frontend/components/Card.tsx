@@ -16,7 +16,7 @@ const Card = () => {
         <ImageCard
             title="Statastics"
             imageSrc="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
-            linkTo="/details"
+            linkTo="/StatsPage"
         />
         </div>
   );
