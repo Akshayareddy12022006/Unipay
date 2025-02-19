@@ -2,8 +2,6 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import  connectDB  from './config/db.js';  // Adjust the path according to where db.js is located
-
 
 dotenv.config();
 
@@ -28,4 +26,3 @@ app.get("/", (req, res) => {
 });
 
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
