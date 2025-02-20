@@ -5,13 +5,14 @@ import dotenv from "dotenv";
 import Razorpay from "razorpay";
 import crypto from "crypto";
 import userRoutes from "./routes/userRoutes.js";
+import connectDB from "./config/db.js";
 
 dotenv.config();
 
 const app = express();
 
 // Connect to MongoDB
-// connectDB();
+connectDB();
 
 // Middleware to parse JSON
 app.use(express.json());
