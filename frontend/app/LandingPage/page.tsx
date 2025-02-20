@@ -6,7 +6,7 @@ export default function LandingPage() {
     return (
         <>
             <Navbar selectedMenuItem="Home" />
-            <div className="h-[200vh] bg-gradient-to-b from-white to-gray-400">
+            <div className="h-[200vh] bg-white">
                 <div className="flex flex-row justify-center">
                     <CarouselDemo />
                 </div>

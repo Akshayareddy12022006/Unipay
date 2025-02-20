@@ -16,7 +16,7 @@ const menuItems = [
     { name: "Home", path: "/LandingPage" },
     { name: "Convert", path: "/ConversionPage" },
     { name: "Stats", path: "/StatsPage" },
-    { name: "Wallet", path: "/products" },
+    { name: "Wallet", path: "/WalletPage" },
     { name: "Transfer", path: "/contact" }
   ]
 

@@ -122,7 +122,7 @@ function ConversionPage() {
         <title>Conversion Page</title>
       </Head>
       <Navbar selectedMenuItem="Convert" />
-      <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-b from-white to-gray-400">
+      <div className="flex flex-col md:flex-row min-h-screen bg-white">
         <div className="md:w-2/3 p-4 overflow-y-auto h-[50vh] md:h-screen">
           <h2 className="text-2xl font-bold mb-4">UniPay Terms and Conditions</h2>
           <div className="space-y-4 text-md">
