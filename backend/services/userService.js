@@ -18,13 +18,14 @@ export const registerUser = async ({ username, phone, password }) => {
   return { _id: user._id, username: user.username, phone: user.phone };
 };
 
-export const loginUser = async ({ phone, password }) => {
-  const user = await User.findOne({ phone });
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    throw new Error("Invalid credentials");
-  }
-
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
-
-  return { token, user: { _id: user._id, username: user.username, phone: user.phone } };
-};
+export const loginUser = async ({ username, password }) => {
+    const user = await User.findOne({ username });
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      throw new Error("Invalid credentials");
+    }
+  
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+  
+    return { token, user: { _id: user._id, username: user.username, phone: user.phone } };
+  };
+  
