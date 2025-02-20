@@ -124,7 +124,7 @@ function ConversionPage() {
       <Navbar selectedMenuItem="Convert" />
       <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-b from-white to-gray-400">
         <div className="md:w-2/3 p-4 overflow-y-auto h-[50vh] md:h-screen">
-          <h2 className="text-2xl font-bold mb-4">Razorpay Terms and Conditions</h2>
+          <h2 className="text-2xl font-bold mb-4">UniPay Terms and Conditions</h2>
           <div className="space-y-4 text-md">
             <p>1. <strong>Acceptance of Terms:</strong> By using Razorpay’s payment gateway, you agree to comply with these terms and conditions. If you do not agree, you should not proceed with the payment.</p>
             <p>2. <strong>Payment Processing:</strong> All transactions processed through Razorpay are subject to approval by the respective banks or payment providers. Razorpay is not responsible for payment failures due to incorrect details or insufficient funds.</p>
