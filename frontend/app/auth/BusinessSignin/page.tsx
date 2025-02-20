@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function SignInPage() {
   const [username, setUsername] = useState("");
@@ -20,31 +20,37 @@ export default function SignInPage() {
   };
 
   const handleSignIn = async () => {
-
-    if (!validatePasscode(passcode)) {
-      alert("Invalid passcode format. Password must be exactly 6 digits.");
-      return;
-    }
-
-    setIsLoading(true); // Set loading state to true
+    // if (!validatePasscode(passcode)) {
+    //   alert("Invalid passcode format. Password must be exactly 6 digits.");
+    //   return;
+    // }
+  
+    setIsLoading(true);
     try {
-      // Simulate an API call for authentication (replace with your actual API call)
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate 1-second delay
-
-      // Check if username and passcode are valid (replace with your actual validation logic)
-      if (username === "user123" && passcode === "password123") {
-        console.log("Sign in successful!");
-        router.push("DashBoard/BusinessDashboard"); // Redirect to the user dashboard
-      } else {
-        alert("Invalid username or passcode. Please try again.");
+      const response = await fetch("http://localhost:5001/api/business/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          businessName: username,
+          password: passcode,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || "Sign in failed");
       }
-    } catch (error) {
+      console.log("Sign in successful!", data);
+      router.push("/Dashboard/BusinessDashboard");
+    } catch (error: any) {
       console.error("Sign in failed:", error);
-      alert("Sign in failed. Please try again.");
+      alert(error.message);
     } finally {
-      setIsLoading(false); // Reset loading state
+      setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-gray-100">
