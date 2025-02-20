@@ -15,28 +15,60 @@ export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const router = useRouter();
 
+  // const handleSignUp = async () => {
+  //   setIsLoading(true); // Set loading state to true
+  //   try {
+  //     // Simulate an API call for signup (replace with your actual API call)
+  //     await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate 1-second delay
+
+  //     // Check if passwords match
+  //     if (password !== confirmPassword) {
+  //       alert("Passwords do not match!");
+  //       return;
+  //     }
+
+  //     console.log("Signing up with:", username, phone, password);
+  //     router.push("/Dashboard/UserDashboard"); // Redirect to the dashboard
+  //   } catch (error) {
+  //     console.error("Sign up failed:", error);
+  //     alert("Sign up failed. Please try again.");
+  //   } finally {
+  //     setIsLoading(false); // Reset loading state
+  //   }
+  // };
+
+
   const handleSignUp = async () => {
-    setIsLoading(true); // Set loading state to true
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+  
+    setIsLoading(true);
+  
     try {
-      // Simulate an API call for signup (replace with your actual API call)
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate 1-second delay
-
-      // Check if passwords match
-      if (password !== confirmPassword) {
-        alert("Passwords do not match!");
-        return;
+      const response = await fetch("http://localhost:5001/api/users/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, phone, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.message || "Sign-up failed");
       }
-
-      console.log("Signing up with:", username, phone, password);
-      router.push("/Dashboard/UserDashboard"); // Redirect to the dashboard
-    } catch (error) {
+  
+      console.log("User signed up:", data);
+      router.push("/Dashboard/UserDashboard"); // Redirect on success
+    } catch (error: any) {
       console.error("Sign up failed:", error);
-      alert("Sign up failed. Please try again.");
+      alert(error.message);
     } finally {
-      setIsLoading(false); // Reset loading state
+      setIsLoading(false);
     }
   };
-
+  
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <Card className="w-96">
