@@ -6,6 +6,7 @@ import Razorpay from "razorpay";
 import crypto from "crypto";
 import userRoutes from "./routes/userRoutes.js";
 import connectDB from "./config/db.js";
+import businessRoutes from "./routes/businessRoutes.js";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api/users', userRoutes);
+app.use('/api/business',businessRoutes);
 
 app.post('/order', async (request, response) => {
   try {

@@ -66,15 +66,31 @@ export default function SignupPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true); // Set loading state to true
     try {
-      // Simulate an API call (replace with your actual API call)
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate 2-second delay
-      console.log("Form submitted:", values);
+      const response = await fetch("http://localhost:5001/api/business/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          businessName: values.businessName,
+          category: values.category,
+          phoneNumber: values.phoneNumber,
+          password: values.password,
+        }),
+      });
+      
+      const data = await response.json();
 
+      if (!response.ok) {
+        throw new Error(data.message || "Signup failed");
+      }
+
+      console.log("Form submitted:", data);
       // Redirect to the business dashboard after successful signup
       router.push("/Dashboard/BusinessDashboard");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Signup failed:", error);
-      alert("Signup failed. Please try again.");
+      alert(error.message);
     } finally {
       setIsLoading(false); // Reset loading state
     }
